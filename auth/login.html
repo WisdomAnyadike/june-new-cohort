@@ -64,9 +64,22 @@
             return
         }
 
-
         alert('login successful')
+
+        let currentUserIndex = database.findIndex((obj) => obj.email == foundUser.email)
+        localStorage.setItem('currentUserIndexJune', currentUserIndex)
+        console.log(currentUserIndex);
         window.location.href = 'dashboard.html'
     }
+
+
+    // let arrOfFoods = ['rice', 'boli', 'fufu']
+
+    // let foundFoodIndex = arrOfFoods.findIndex((food) => {
+    //     return food.length === 5
+    // })
+
+
+
 
 </script>
