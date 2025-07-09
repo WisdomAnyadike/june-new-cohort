@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div onclick="run(event)" style="background-color: blue;">
+        <button> click me </button>
+        <p style="background-color: brown;" id="ptag"> i love js </p>
+
+        <input>
+    </div>
+
+</body>
+
+</html>
+<script>
+    // let ptag = document.getElementById('ptag')
+
+    // function clickMe(ev) {
+    //     console.log(ev);
+    //     // ptag.style.color === 'red' ? ptag.style.color = 'black' : ptag.style.color = 'red'
+    // }
+
+
+    // function write(word = 'i like', num = 6) {
+    //     console.log(word, num);
+    // }
+
+    // write()
+    // write('wow')
+
+    // let value = 25
+
+    // function sayValue(v) {
+    //     console.log(v);
+    // }
+
+    // sayValue(value)
+
+    // function letsClick(params) {
+    //     console.log(params);
+    // }
+
+    function run(params) {
+        console.log(params);
+        params.target.children[0].style.backgroundColor = 'yellow'
+        console.log(params.target.lastElementChild);
+        params.target.lastElementChild.style.outlineColor = 'green'
+    }
+
+
+
+    let obj = {
+
+        name: {
+            school: [
+                {
+                    founder: 'emenike',
+                    who: 'samuel',
+                    places: ['anambra', 'oyo']
+                }
+            ]
+        },
+
+        class: [
+            {
+                village: 'egbeda'
+            }
+        ]
+    }
+
+    console.log(obj.name.school[0].places[1]);
+    console.log(obj.class[0].village);
+
+
+
+
+
+
+</script>

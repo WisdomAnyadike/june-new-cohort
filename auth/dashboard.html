@@ -61,7 +61,7 @@
     }
 
 
-    // foreach , find , map , filter , findIndex , some
+    // foreach , find , map , filter , findIndex , some , every , reduce
 
     let arr = [1, 2, 3, 4, 5]
 
@@ -72,7 +72,7 @@
 
     console.log(newArr);
 
-    let filteredEvenArr = arr.filter((num) => num % 2 == 0)
+    let filteredEvenArr = arr.filter((num, i, arr) => num % 2 == 0)
     console.log(filteredEvenArr);
 
     let myArr = ['2', '3', '4', '5', '6']
@@ -82,6 +82,44 @@
     })
 
     console.log(isEveryBodyAString);
+
+    //reduce
+    let cartProducts = [
+        {
+            name: 'rice',
+            price: 4000
+        },
+        {
+            name: 'cap',
+            price: 2000
+        },
+        {
+            name: 'water',
+            price: 500
+        }
+    ]
+
+    let total = cartProducts.reduce((a, c) => {
+        return a / c.price
+    }, 1)
+
+    console.log(total);
+
+
+    let numbers = [1, 50, 4, 67, 23, 72, 12, 7, 3, 3]
+    let twoDigitNumbers = numbers.filter((num) => num > 9)
+    console.log(twoDigitNumbers);
+
+    let totalVal = 0
+    for (let index = 0; index < twoDigitNumbers.length; index++) {
+        totalVal = totalVal + twoDigitNumbers[index]
+    }
+
+    let totalVal1 = twoDigitNumbers.reduce((acc, num) => acc + num, 0)
+
+    console.log(totalVal , totalVal1);
+
+
 
 
 
