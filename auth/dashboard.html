@@ -5,34 +5,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../auth/css/dashboard.css">
+
 </head>
 
 <body>
-    <h1> hello <span id="user"> loading... </span></h1> <button onclick="logOut()">log out</button>
+    <div class="nav">
+        <p> Blog app</p>
+        <h1 id="header"> Hello <span id="user"> loading... </span></h1> <span><button
+                onclick="profile()">profile</button> <button onclick="logOut()">log out</button></span>
+    </div>
+
+
+
+
+    <div class="form-body">
+        <div class="form-image"></div>
+        <div class="form-textarea">
+            <h1> Post blog </h1>
+            <div class="line"></div>
+            <form>
+                <textarea class="textbox smallBox" id="forTitle" name="title" placeholder="Title" maxlength="30"
+                    required accept-charset="utf-8"> </textarea>
+
+                <textarea class="textbox bigBox" id="forDescription" name="messageText"
+                    placeholder="Write your message here" maxlength="600" required accept-charset="utf-8"></textarea>
+
+                <div>
+                    <input type="file" style="display: inline; width: 40%;" onchange="pickPicture(event)"> <img
+                        width="40px" id="ourpreviewimage" height="40px" alt="preview image">
+                </div>
+
+                <br>
+                <br>
+
+
+                <button class="submit-btn" type="button" onclick="postBlog()">SEND</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    <div id="preview">
+
+
+
+    </div>
+
+
+
 </body>
 
 </html>
 <script>
     let database = JSON.parse(localStorage.getItem('signedUpUsers')) || []
     let currentUserIndex = localStorage.getItem('currentUserIndexJune')
-    let currentUser = database[currentUserIndex]
+    let currentUser = database[currentUserIndex] // arr[1]
+    let currentUsersblogsArr = currentUser.blogPosts // []
+
+
 
 
     // let arr = [
     //     {
     //         username: 'wisdom',
     //         email: 'anya@gmail.com',
-    //         password: 'ghsjkl;k'
+    //         password: 'ghsjkl;k',
+    //         blogPosts: []
     //     },
     //     {
     //         username: 'ini',
     //         email: 'inioluwa@gmail.com',
-    //         password: 'sghjsn'
+    //         password: 'sghjsn',
+    //        blogPosts: []
     //     }
     //     , {
     //         username: 'ebuka',
     //         email: 'ebuka@gmail.com',
-    //         password: 'opdkjk'
+    //         password: 'opdkjk',
+    //          blogPosts: []
     //     }
 
     // ]
@@ -59,6 +111,78 @@
         }
 
     }
+
+    function postBlog() {
+        if (!forTitle.value.trim() || !forDescription.value.trim() || !ourpreviewimage.src) {
+            alert('please all fields are mandatory')
+        } else if (currentUsersblogsArr.find((blogObj) => blogObj.title === forTitle.value.trim())) {
+            alert('blog already exists')
+        } else {
+            let blogObj = {
+                title: forTitle.value.trim(),
+                description: forDescription.value.trim(),
+                image: ourpreviewimage.src,
+                liked: false
+            }
+
+            currentUsersblogsArr.push(blogObj)
+            localStorage.setItem('signedUpUsers', JSON.stringify(database))
+            alert('blog posted successfully')
+            displayBlogs()
+
+        }
+
+    }
+
+    function pickPicture(ev) {
+        let file = ev.target.files[0]
+        if (!file) {
+            alert('please attach file')
+            return
+        }
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.addEventListener('load', (e) => {
+            ourpreviewimage.style.display = 'block'
+            ourpreviewimage.src = e.target.result
+        })
+
+    }
+
+
+
+
+    function displayBlogs() {
+        preview.innerHTML = ''
+        currentUsersblogsArr.forEach((blogObj, i) => {
+            preview.innerHTML += ` <div id="singlePost"> 
+         <p> ${blogObj.title} </p>
+            <img src="${blogObj.image}" width="100px" height="100px"/>
+            <button onclick="helpLike(${i})"> ${blogObj.liked ? 'liked' : 'not liked'} </button>
+            <div/>
+            `
+        });
+
+    }
+
+    displayBlogs()
+
+    function helpLike(index) {
+        // if (currentUsersblogsArr[index].liked) {
+        //     currentUsersblogsArr[index].liked = false
+        // } else {
+        //     currentUsersblogsArr[index].liked = true
+        // }
+
+        currentUsersblogsArr[index].liked = !currentUsersblogsArr[index].liked
+        displayBlogs()
+        localStorage.setItem('signedUpUsers', JSON.stringify(database))
+
+
+    }
+
+
+
 
 
     // foreach , find , map , filter , findIndex , some , every , reduce
@@ -117,10 +241,17 @@
 
     let totalVal1 = twoDigitNumbers.reduce((acc, num) => acc + num, 0)
 
-    console.log(totalVal , totalVal1);
+    console.log(totalVal, totalVal1);
 
 
 
 
+    let obj = {
+        isRaining: true
+    }
+
+
+    obj.isRaining = false
+    console.log(obj);
 
 </script>
