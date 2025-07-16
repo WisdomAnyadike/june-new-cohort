@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="number" id="number"> <button onclick="addNum(event)"> add num </button>
+
+    <div id="preview">
+
+    </div>
+    <div id="previewVals">
+
+    </div>
+
+</body>
+
+</html>
+<script>
+    let numsArr = [1, 2, 3]
+
+
+    function displayNums() {
+        preview.innerHTML = ''
+        numsArr.forEach((num) => {
+            preview.innerHTML += `<p> ${num} </p>`
+        })
+
+
+
+    }
+
+    displayNums()
+
+    function addNum() {
+        if (!number.value.trim()) {
+            alert('add a number to input')
+            return
+        }
+
+        numsArr.push(Number(number.value.trim()))
+        console.log(numsArr);
+        displayNums()
+
+
+    }
+
+
+    let vals = [1, '2', 3, '4']
+
+    function displayVals() {
+        vals.forEach((v) => {
+            // function determineIfNumOrString() {
+            //     if (typeof v === 'number') {
+            //         return 'true'
+            //     }
+            //     return 'false'
+            // }
+
+            previewVals.innerHTML += `<p>  ${typeof v === 'number' ? 'true' : 'false'} </p>`
+        })
+    }
+
+    displayVals()
+
+
+    let newArr = [`<button> wow  </button>`, `<button> jump </button>`, `<button> click </button>`]
+
+    newArr.forEach((eachSingleButton) => {
+        previewVals += eachSingleButton
+    })
+
+</script>

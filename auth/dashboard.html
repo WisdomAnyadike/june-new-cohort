@@ -32,8 +32,8 @@
                     placeholder="Write your message here" maxlength="600" required accept-charset="utf-8"></textarea>
 
                 <div>
-                    <input type="file" style="display: inline; width: 40%;" onchange="pickPicture(event)"> <img
-                        width="40px" id="ourpreviewimage" height="40px" alt="preview image">
+                    <input type="file" id="piicture" style="display: inline; width: 40%;" onchange="pickPicture(event)">
+                    <img width="40px" id="ourpreviewimage" height="40px" alt="preview image">
                 </div>
 
                 <br>
@@ -53,42 +53,41 @@
 
     </div>
 
-
+    <!-- <button id="myButton">click</button> -->
 
 </body>
 
 </html>
 <script>
     let database = JSON.parse(localStorage.getItem('signedUpUsers')) || []
-    let currentUserIndex = localStorage.getItem('currentUserIndexJune')
-    let currentUser = database[currentUserIndex] // arr[1]
+    let currentUserIndex = localStorage.getItem('currentUserIndexJune') //2
+    let currentUser = database[currentUserIndex] // database[2]
     let currentUsersblogsArr = currentUser.blogPosts // []
 
-
-
-
-    // let arr = [
+    // let currentUsersblogsArr = [
     //     {
-    //         username: 'wisdom',
-    //         email: 'anya@gmail.com',
-    //         password: 'ghsjkl;k',
-    //         blogPosts: []
+    //         title: 'wisdom',
+    //         description: 'anya@gmail.com', // 0
+    //         image: 'ghsjkl;k',
+    //         liked: []
     //     },
-    //     {
-    //         username: 'ini',
-    //         email: 'inioluwa@gmail.com',
-    //         password: 'sghjsn',
-    //        blogPosts: []
-    //     }
-    //     , {
-    //         username: 'ebuka',
-    //         email: 'ebuka@gmail.com',
-    //         password: 'opdkjk',
-    //          blogPosts: []
-    //     }
+    //      {
+    //         title: 'wisdom',
+    //         description: 'anya@gmail.com', // 1
+    //         image: 'ghsjkl;k',
+    //         liked: []
+    //     },
+    //   {
+    //         title: 'wisdom',
+    //         description: 'anya@gmail.com', // 2
+    //         image: 'ghsjkl;k',
+    //         liked: []
+    //     },
 
     // ]
     // arr[1]
+
+
 
     function checkUser() {
         if (!currentUser) {
@@ -115,12 +114,12 @@
     function postBlog() {
         if (!forTitle.value.trim() || !forDescription.value.trim() || !ourpreviewimage.src) {
             alert('please all fields are mandatory')
-        } else if (currentUsersblogsArr.find((blogObj) => blogObj.title === forTitle.value.trim())) {
+        } else if (currentUsersblogsArr.find((blogObj) => blogObj.title === forTitle.value.trim().toLowerCase())) {
             alert('blog already exists')
         } else {
             let blogObj = {
-                title: forTitle.value.trim(),
-                description: forDescription.value.trim(),
+                title: forTitle.value.trim().toLowerCase(),
+                description: forDescription.value.trim().toLowerCase(),
                 image: ourpreviewimage.src,
                 liked: false
             }
@@ -134,8 +133,8 @@
 
     }
 
-    function pickPicture(ev) {
-        let file = ev.target.files[0]
+    function pickPicture(e) {
+        let file = piicture.files[0]
         if (!file) {
             alert('please attach file')
             return
@@ -154,11 +153,25 @@
 
     function displayBlogs() {
         preview.innerHTML = ''
+
         currentUsersblogsArr.forEach((blogObj, i) => {
+
+            // function determineIfBlogIsLiked() {
+            //     if (blogObj.liked) {
+            //         return 'liked'
+            //     }
+
+            //     return 'not liked'
+            // }
+
+
             preview.innerHTML += ` <div id="singlePost"> 
-         <p> ${blogObj.title} </p>
+         <p> ${capitalizeFirstLetter(blogObj.title)} </p>
+         <p> ${blogObj.description} </p>
             <img src="${blogObj.image}" width="100px" height="100px"/>
-            <button onclick="helpLike(${i})"> ${blogObj.liked ? 'liked' : 'not liked'} </button>
+            <button onclick="helpLike(${i})"> ${blogObj.liked ? 'liked' : 'not-liked'} </button>
+
+            <button onclick="deletePost(${i})"> delete </button>
             <div/>
             `
         });
@@ -175,9 +188,24 @@
         // }
 
         currentUsersblogsArr[index].liked = !currentUsersblogsArr[index].liked
-        displayBlogs()
         localStorage.setItem('signedUpUsers', JSON.stringify(database))
+        displayBlogs()
 
+
+
+    }
+
+    function capitalizeFirstLetter(text) {
+        let finalText = text.toLowerCase()
+        finalText = finalText.replace(finalText[0], finalText[0].toUpperCase())
+
+        return finalText
+    }
+
+    function deletePost(index) {
+        currentUsersblogsArr.splice(index, 1)
+        localStorage.setItem('signedUpUsers', JSON.stringify(database))
+        displayBlogs()
 
     }
 
@@ -253,5 +281,31 @@
 
     obj.isRaining = false
     console.log(obj);
+
+
+      // console.log(myvar);
+    // let myvar = 'hmmm'
+
+    // let myfunction = (e , word = 'hello') => {
+    //     alert(word);
+    //     console.log(e);
+    // };
+
+    // myButton.onclick = myfunction;
+
+
+
+
+    // myfunction(event, 'say wow');
+
+
+    // myButton.addEventListener('click', (e) => {
+    //     alert('hello');
+    //     console.log(e);
+    // })
+
+
+
+
 
 </script>
