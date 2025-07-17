@@ -51,7 +51,7 @@
     }
 
 
-    let vals = [1, '2', 3, '4']
+    let vals = [6, '2', 3, '4']
 
     function displayVals() {
         vals.forEach((v) => {
@@ -74,5 +74,48 @@
     newArr.forEach((eachSingleButton) => {
         previewVals += eachSingleButton
     })
+
+
+    let food = vals[0] === 1 ? 'orange' : 'pineapple'
+    console.log(food);
+
+
+    setTimeout(() => {
+
+    }, 1000)
+
+    console.log('im here');
+    setTimeout(() => {
+        console.log('im here after 10 secs');
+    }, 10000);
+
+    let index = 0
+
+    let colorInterval = setInterval(() => {
+        index++
+        console.log(index);
+        if (index == 10) {
+            clearInterval(colorInterval)
+            document.body.style.backgroundColor = ''
+        } else {
+            changeBackgroundColor()
+        }
+    }, 1000)
+
+    function changeBackgroundColor() {
+        function rgb() {
+            return Math.floor(Math.random() * 256) // 0-255
+            // return 25
+        }
+        let finalColor = `rgb(${rgb()},${rgb()},${rgb()})` // rgb(89,56,255)
+        document.body.style.backgroundColor = finalColor
+    }
+
+
+    // clearInterval(colorInterval)
+
+
+
+
 
 </script>

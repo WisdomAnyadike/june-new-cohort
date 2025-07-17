@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../auth/css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
 
 </head>
 
 <body>
     <div class="nav">
         <p> Blog app</p>
-        <h1 id="header"> Hello <span id="user"> loading... </span></h1> <span><button
-                onclick="profile()">profile</button> <button onclick="logOut()">log out</button></span>
+        <h1 id="header"> Hello <span id="user"> loading... </span></h1> <span>
+            <img src="" alt="" id="dp" width="40px" height="40px" style="border-radius: 50%;">
+
+            <button onclick="profile()">profile</button> <button onclick="logOut()">log out</button></span>
     </div>
 
 
@@ -40,7 +42,7 @@
                 <br>
 
 
-                <button class="submit-btn" type="button" onclick="postBlog()">SEND</button>
+                <button class="submit-btn" type="button" onclick="postBlog(event)">SEND</button>
             </form>
 
         </div>
@@ -61,44 +63,26 @@
 <script>
     let database = JSON.parse(localStorage.getItem('signedUpUsers')) || []
     let currentUserIndex = localStorage.getItem('currentUserIndexJune') //2
-    let currentUser = database[currentUserIndex] // database[2]
-    let currentUsersblogsArr = currentUser.blogPosts // []
-
-    // let currentUsersblogsArr = [
-    //     {
-    //         title: 'wisdom',
-    //         description: 'anya@gmail.com', // 0
-    //         image: 'ghsjkl;k',
-    //         liked: []
-    //     },
-    //      {
-    //         title: 'wisdom',
-    //         description: 'anya@gmail.com', // 1
-    //         image: 'ghsjkl;k',
-    //         liked: []
-    //     },
-    //   {
-    //         title: 'wisdom',
-    //         description: 'anya@gmail.com', // 2
-    //         image: 'ghsjkl;k',
-    //         liked: []
-    //     },
-
-    // ]
-    // arr[1]
-
-
+    let currentUser = database[currentUserIndex]// database[2]
 
     function checkUser() {
         if (!currentUser) {
             alert('unauthorized')
             location.href = 'login.html'
         } else {
+            console.log(currentUser);
             user.innerHTML = currentUser.username
+            dp.src = currentUser.profilePicture || 'https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg'
         }
     }
-
     checkUser()
+
+    let currentUsersblogsArr = currentUser.blogPosts // []
+
+
+
+
+
 
 
     function logOut() {
@@ -111,25 +95,44 @@
 
     }
 
-    function postBlog() {
+    function postBlog(ev) {
+
+
+
+
+
         if (!forTitle.value.trim() || !forDescription.value.trim() || !ourpreviewimage.src) {
             alert('please all fields are mandatory')
+
         } else if (currentUsersblogsArr.find((blogObj) => blogObj.title === forTitle.value.trim().toLowerCase())) {
             alert('blog already exists')
-        } else {
-            let blogObj = {
-                title: forTitle.value.trim().toLowerCase(),
-                description: forDescription.value.trim().toLowerCase(),
-                image: ourpreviewimage.src,
-                liked: false
-            }
 
-            currentUsersblogsArr.push(blogObj)
-            localStorage.setItem('signedUpUsers', JSON.stringify(database))
-            alert('blog posted successfully')
-            displayBlogs()
+        } else {
+            ev.target.innerHTML = 'Sending....'
+            ev.target.disabled = true
+
+            setTimeout(() => {
+                let blogObj = {
+                    title: forTitle.value.trim().toLowerCase(),
+                    description: forDescription.value.trim().toLowerCase(),
+                    image: ourpreviewimage.src,
+                    liked: false
+                }
+
+                currentUsersblogsArr.push(blogObj)
+                localStorage.setItem('signedUpUsers', JSON.stringify(database))
+                alert('blog posted successfully')
+                displayBlogs()
+                ev.target.innerHTML = 'Send'
+                ev.target.disabled = false
+
+            }, 3000);
+
+
 
         }
+
+
 
     }
 
@@ -207,6 +210,10 @@
         localStorage.setItem('signedUpUsers', JSON.stringify(database))
         displayBlogs()
 
+    }
+
+    function profile() {
+        window.location.href = 'profile.html'
     }
 
 

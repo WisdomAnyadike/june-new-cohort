@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <img src="" id="dp" alt="" width="100px" height="100px" style="border-radius: 50%;">
+
+    <br>
+    <br>
+    <input type="file" onchange="chooseDp(event)">
+</body>
+
+</html>
+<script>
+    let database = JSON.parse(localStorage.getItem('signedUpUsers')) || []
+    let currentUserIndex = localStorage.getItem('currentUserIndexJune') //2
+    let currentUser = database[currentUserIndex]// database[2]
+
+    function checkUser() {
+        if (!currentUser) {
+            alert('unauthorized')
+            location.href = 'login.html'
+            return
+        }
+        //null 'gvhhh'
+        dp.src = currentUser.profilePicture || 'https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg'
+
+    }
+
+    checkUser()
+
+
+    function chooseDp(ev) {
+        let file = ev.target.files[0]
+
+        let reader = new FileReader()
+        if (file) {
+            reader.readAsDataURL(file)
+        }
+
+        reader.addEventListener('load', (ev) => {
+            dp.src = ev.target.result
+            currentUser.profilePicture = ev.target.result
+            localStorage.setItem('signedUpUsers', JSON.stringify(database));
+        })
+
+    }
+
+
+
+
+
+
+
+</script>
