@@ -6,16 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+
+    </style>
 
 </head>
 
 <body>
     <div class="nav">
         <p> Blog app</p>
-        <h1 id="header"> Hello <span id="user"> loading... </span></h1> <span>
-            <img src="" alt="" id="dp" width="40px" height="40px" style="border-radius: 50%;">
+        <h1 id="header"> Hello <span id="user"> loading... </span></h1>
 
-            <button onclick="profile()">profile</button> <button onclick="logOut()">log out</button></span>
+        <span class="navspan">
+            <img src="" alt="" id="dp" width="40px" height="40px" style="border-radius: 50%;">
+            <button class="navbutton" onclick="products()"> shop </button>
+
+            <button class="navbutton" onclick="profile()">profile</button> <button class="navbutton"
+                onclick="logOut()">log out</button></span>
     </div>
 
 
@@ -81,7 +88,9 @@
 
 
 
-
+    function products(params) {
+        window.location.href = 'shop.html'
+    }
 
 
 
@@ -111,6 +120,7 @@
             ev.target.innerHTML = 'Sending....'
             ev.target.disabled = true
 
+
             setTimeout(() => {
                 let blogObj = {
                     title: forTitle.value.trim().toLowerCase(),
@@ -127,6 +137,8 @@
                 ev.target.disabled = false
 
             }, 3000);
+
+
 
 
 

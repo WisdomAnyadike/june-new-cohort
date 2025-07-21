@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/shop.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <div class="nav">
+        <p> Shop </p>
+        <h1 id="header"> Hello <span id="user"> loading... </span></h1>
+
+        <span class="navspan">
+            <img src="" alt="" id="dp" width="40px" height="40px" style="border-radius: 50%;">
+            <button class="navbutton" onclick="products()"> shop </button>
+
+            <button class="navbutton" onclick="profile()">profile</button> <button class="navbutton"
+                onclick="logOut()">log out</button></span>
+    </div>
+    <div class="container">
+
+
+
+
+
+    </div>
+</body>
+
+</html>
+<script>
+
+    let database = JSON.parse(localStorage.getItem('signedUpUsers')) || []
+    let currentUserIndex = localStorage.getItem('currentUserIndexJune') //2
+    let currentUser = database[currentUserIndex]// database[2]
+
+    function checkUser() {
+        if (!currentUser) {
+            alert('unauthorized')
+            location.href = 'login.html'
+        } else {
+            console.log(currentUser);
+            user.innerHTML = currentUser.username
+            dp.src = currentUser.profilePicture || 'https://i.pinimg.com/474x/e6/e4/df/e6e4df26ba752161b9fc6a17321fa286.jpg'
+        }
+    }
+    checkUser()
+
+    // CRUD: create , read , update , delete 
+    // GP (P/P) D : post , get , put or patch , delete
+
+
+    // console.log('hello');
+    // fetch('https://dummyjson.com/products').then((res) => res.json()).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // })
+
+
+
+    async function getProducts() {
+        try {
+            const res = await fetch('https://dummyjson.com/products');
+            const data = await res.json()
+
+
+            let productsArr = data.products
+            console.log(productsArr);
+
+            // ${product.reviews.map((review) => {
+            //         return `<li> ${review.comment} </li>`
+            //     }).join('')
+            //         }
+
+
+
+            productsArr.forEach((product, i) => {
+                document.querySelector('.container').innerHTML += `
+                <div class="product">
+    <div class="img-container">
+      <img src="${product.thumbnail}">
+    </div>
+    <div class="product-info">
+      <div class="product-content">
+        <h1> ${product.title} </h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit ariatur</p>
+        <ul>
+                 <li> ${product.reviews[0].comment}</li>  
+                    <li>${product.reviews[1].comment}</li> 
+                    <li>${product.reviews[2].comment}</li> 
+        </ul>
+        <div class="buttons">
+          <a class="button buy" href="#">Buy</a>
+          <a class="button add" href="#">Add to Cart</a>
+          <span class="button" id="price">$59,99</span>
+        </div>
+      </div>
+    </div>
+  </div>
+                `
+
+
+            });
+
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    getProducts()
+
+
+
+
+
+
+
+</script>

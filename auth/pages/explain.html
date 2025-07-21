@@ -15,6 +15,10 @@
 
     </div>
     <div id="previewVals">
+       
+    </div>
+
+    <div id="products">
 
     </div>
 
@@ -115,7 +119,52 @@
     // clearInterval(colorInterval)
 
 
+    let obj = {
+        sayName: () => {
+            return 'my name is tolu'
+        }
+    }
+
+    console.log(obj.sayName());
 
 
+    let productsArr = [
+        {
+            title: 'sdghjkd',
+            brand: 'nike'
+        },
+        {
+            title: 'sdghjkd',
+            brand: 'addidas'
+        }
+        ,
+        {
+            title: 'sdghjkd',
+            brand: 'new balance'
+        }
+
+    ]
+
+    productsArr.forEach((product) => {
+        document.getElementById('products').innerHTML += `
+      <p> ${product.brand}</p>
+      `
+    })
+
+
+
+    let arr = ['hello', 'eat', 'sleep']
+    document.body.innerHTML = arr;
+
+    let newArr1 = arr.map((text) => {
+        return `<p> ${text} </p>`
+    })
+
+    console.log(newArr1);
+
+    document.body.innerHTML = newArr1.join('');
+    // [ '<p> hello </p>' , '<p> eat </p>' , '<p> sleep </p>'  ]
+
+  
 
 </script>
