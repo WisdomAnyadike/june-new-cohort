@@ -16,7 +16,7 @@
 
         <span class="navspan">
             <img src="" alt="" id="dp" width="40px" height="40px" style="border-radius: 50%;">
-            <button class="navbutton" onclick="products()"> shop </button>
+            <button class="navbutton" onclick="blog()"> blog </button>
 
             <button class="navbutton" onclick="profile()">profile</button> <button class="navbutton"
                 onclick="logOut()">log out</button></span>
@@ -60,15 +60,35 @@
     //     console.log(err);
     // })
 
+    function profile() {
+        window.location.href = 'profile.html'
+    }
+
+    function logOut() {
+        let confirmUserExit = confirm('are you sure?')
+        if (confirmUserExit) {
+            alert('logout successful')
+            localStorage.removeItem('currentUserIndexJune')
+            window.location.href = 'login.html'
+        }
+
+    }
+
+    function blog() {
+        window.location.href = 'dashboard.html'
+    }
+
+
 
 
     async function getProducts() {
+        document.querySelector('.container').innerHTML = 'loading....'
         try {
             const res = await fetch('https://dummyjson.com/products');
             const data = await res.json()
 
-
-            let productsArr = data.products
+            console.log(data);
+            let productsArr = data.products // 
             console.log(productsArr);
 
             // ${product.reviews.map((review) => {
@@ -77,8 +97,9 @@
             //         }
 
 
-
+            document.querySelector('.container').innerHTML = ''
             productsArr.forEach((product, i) => {
+
                 document.querySelector('.container').innerHTML += `
                 <div class="product">
     <div class="img-container">
@@ -94,7 +115,7 @@
                     <li>${product.reviews[2].comment}</li> 
         </ul>
         <div class="buttons">
-          <a class="button buy" href="#">Buy</a>
+          <a class="button buy" onclick="seemore()" href="#"> see.. </a>
           <a class="button add" href="#">Add to Cart</a>
           <span class="button" id="price">$59,99</span>
         </div>
@@ -114,6 +135,16 @@
     getProducts()
 
 
+
+    function seemore() {
+
+        document.querySelector('.container').innerHTML = `
+        
+        <button onclick="getProducts()"> go back </button>
+         here we show details about the particular product clicked
+        
+        `
+    }
 
 
 
