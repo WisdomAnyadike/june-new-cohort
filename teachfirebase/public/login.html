@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <!-- Body of Form starts -->
+    <div class="container">
+        <form>
+
+
+            <!---Email ID---->
+            <div class="box">
+                <label for="email" class="fl fontLabel"> Email: </label>
+                <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="email" id="myemail" name="email" placeholder="Email Id" class="textBox">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!--Email ID----->
+
+
+            <!---Password------>
+            <div class="box">
+                <label for="password" class="fl fontLabel"> Password </label>
+                <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                <div class="fr">
+                    <input type="Password" id="mypassword" name="password" placeholder="Password" class="textBox">
+                </div>
+                <div class="clr"></div>
+            </div>
+            <!---Password---->
+
+
+
+
+
+
+
+
+            <!---Submit Button------>
+            <div style="display: flex; ">
+                <div class="box" style="background: #2d3e3f">
+                    <input type="button" name="Submit" onclick="login(event)" class="submit" value="SUBMIT">
+                </div>
+
+                <div class="box" style="background: #2d3e3f">
+                    <input type="button" name="Submit" class="submit" onclick="" value="Google">
+                </div>
+
+
+            </div>
+            <!---Submit Button----->
+        </form>
+    </div>
+    <!--Body of Form ends--->
+</body>
+
+</html>
+<script>
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBuVJBtozFRiUba83iupXJAFQeUi0DFRLA",
+        authDomain: "june-cohort.firebaseapp.com",
+        projectId: "june-cohort",
+        storageBucket: "june-cohort.firebasestorage.app",
+        messagingSenderId: "53416909340",
+        appId: "1:53416909340:web:aed182c1e80ebb972c1dd9"
+    };
+
+    // Initialize Firebase
+
+    console.log(firebase);
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login(ev) {
+        ev.preventDefault()
+
+        ev.target.value = 'LOADING...'
+        ev.target.disabled = true
+        console.log('button working');
+
+        let email = document.querySelector('#myemail').value.trim()
+        let password = document.querySelector('#mypassword').value.trim()
+
+
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                alert('login successful')
+                ev.target.value = 'SUBMIT'
+                ev.target.disabled = false
+                window.location.href = 'dashboard.html'
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                ev.target.value = 'SUBMIT'
+                ev.target.disabled = false
+                alert(errorMessage)
+            });
+
+    }
+
+
+
+</script>
