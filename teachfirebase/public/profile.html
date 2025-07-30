@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="../public/css/profile.css">
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar__welcome"> Profile settings</div>
+        <div class="navbar__actions">
+            <button title="Dashboard" onclick="backToDashboard()">
+                Dashboard
+            </button>
+
+        </div>
+    </nav>
+
+    <div class="main">
+
+
+        <!-- Profile Form -->
+        <section class="profile-container">
+            <div class="profile-header">Edit Profile</div>
+            <div class="profile-picture">
+
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter new username" />
+            </div>
+            <button class="save-button">Save Changes</button>
+        </section>
+    </div>
+</body>
+
+</html>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBuVJBtozFRiUba83iupXJAFQeUi0DFRLA",
+        authDomain: "june-cohort.firebaseapp.com",
+        projectId: "june-cohort",
+        storageBucket: "june-cohort.firebasestorage.app",
+        messagingSenderId: "53416909340",
+        appId: "1:53416909340:web:aed182c1e80ebb972c1dd9"
+    };
+
+    // Initialize Firebase
+
+    console.log(firebase);
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function checkUser() {
+        displayProfileImage(false)
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                var uid = user.uid;
+                console.log(user);
+                displayProfileImage(true)
+                myImage.src = user.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4g_2Qj3LsNR-iqUAFm6ut2EQVcaou4u2YXw&s'
+            } else {
+                window.location.href = 'login.html'
+            }
+        });
+
+    }
+
+    checkUser()
+
+
+    function displayProfileImage(bool) {
+        if (bool) {
+            document.querySelector('.profile-picture').innerHTML = `
+        <img id="myImage" src="" alt="Current Profile" />
+                <input type="file" onchange="pickPicture(event)" accept=".jpg,.png,.jpeg">`
+
+        } else {
+            document.querySelector('.profile-picture').innerHTML = 'loading...'
+        }
+
+
+    }
+
+
+
+    function pickPicture(ev) {
+        let file = ev.target.files[0]
+        console.log(file);
+
+        let formData = new FormData()
+        formData.append('file', file)
+        formData.append('upload_preset', 'juneapp')
+
+        fetch('https://api.cloudinary.com/v1_1/anyacodes/image/upload', {
+            method: 'POST',
+            body: formData
+        }).then((res) => res.json()).then((data) => {
+            const user = firebase.auth().currentUser;
+            user.updateProfile({
+                photoURL: data.secure_url
+            }).then(() => {
+                myImage.src = data.secure_url
+              alert('profile picture updated successfully')
+            }).catch((error) => {
+              alert(error.message)
+            });
+
+
+
+        }).catch((err) => alert(err.message))
+
+
+
+
+    }
+
+
+    function backToDashboard(params) {
+        window.location.href = 'dashboard.html'
+
+    }
+</script>

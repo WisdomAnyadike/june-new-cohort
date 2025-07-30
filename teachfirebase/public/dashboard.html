@@ -2,13 +2,119 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Dashboard</title>
+    <link rel="stylesheet" href="../public/css/dash.css">
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth-compat.js"></script>
+
 </head>
 
 <body>
-    hello
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar__welcome">Welcome, <span id="myUser"> loading... </span></div>
+        <div class="navbar__actions">
+            <button title="Settings" onclick="goToProfile()">
+                &#9881;
+            </button>
+            <button title="logOut" onclick="logOut()">
+                logout
+            </button>
+            <div class="navbar__profile">
+                <img id="myImage" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4g_2Qj3LsNR-iqUAFm6ut2EQVcaou4u2YXw&s' alt="Profile" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar: Friends List -->
+    <!-- <aside class="sidebar">
+        <div class="sidebar__header">Friends</div>
+        <ul class="friend-list">
+            <li>
+                <img src="https://via.placeholder.com/40" alt="Alice" />
+                <span>Alice</span>
+            </li>
+            <li>
+                <img src="https://via.placeholder.com/40" alt="Bob" />
+                <span>Bob</span>
+            </li>
+            <li>
+                <img src="https://via.placeholder.com/40" alt="Charlie" />
+                <span>Charlie</span>
+            </li>
+        </ul>
+    </aside> -->
+
+    <!-- Chat Area -->
+    <main class="chat-area">
+        <div class="chat-header">Group Chat: Friends Chat</div>
+        <div class="messages">
+            <div class="message friend">Hey John, are you coming to the game tonight?</div>
+            <div class="message user">Absolutely! What time should we meet?</div>
+            <div class="message friend">Let's meet at 7 PM at the stadium entrance.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message..." />
+            <button>Send</button>
+        </div>
+    </main>
 </body>
 
 </html>
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBuVJBtozFRiUba83iupXJAFQeUi0DFRLA",
+        authDomain: "june-cohort.firebaseapp.com",
+        projectId: "june-cohort",
+        storageBucket: "june-cohort.firebasestorage.app",
+        messagingSenderId: "53416909340",
+        appId: "1:53416909340:web:aed182c1e80ebb972c1dd9"
+    };
+
+    // Initialize Firebase
+
+    console.log(firebase);
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+
+    function checkUser() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                var uid = user.uid;
+                console.log(user);
+                myUser.innerHTML = user.displayName || 'User'
+                myImage.src = user.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4g_2Qj3LsNR-iqUAFm6ut2EQVcaou4u2YXw&s'
+            } else {
+                window.location.href = 'login.html'
+            }
+        });
+
+    }
+
+    checkUser()
+
+
+    function goToProfile(params) {
+        window.location.href = 'profile.html'
+
+    }
+
+
+    function logOut(params) {
+        let toConfirm = confirm('are you sure you want to logout?')
+        if (toConfirm) {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html'
+            }).catch((error) => {
+                alert(error.message)
+            });
+        }
+
+
+    }
+</script>

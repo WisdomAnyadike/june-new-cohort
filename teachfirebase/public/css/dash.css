@@ -1,0 +1,207 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    color: #333;
+    display: flex;
+    height: 100vh;
+}
+
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar__welcome {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.navbar__actions {
+    display: flex;
+    align-items: center;
+}
+
+.navbar__actions button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-right: 20px;
+    color: #666;
+    transition: color 0.2s;
+}
+
+.navbar__actions button:hover {
+    color: #333;
+}
+
+.navbar__profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #4a90e2;
+}
+
+.navbar__profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sidebar (Friends List) */
+.sidebar {
+    width: 250px;
+    background: #fff;
+    border-right: 1px solid #ddd;
+    padding-top: 80px;
+    /* account for navbar */
+    overflow-y: auto;
+}
+
+.sidebar__header {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    color: #4a90e2;
+}
+
+.friend-list {
+    list-style: none;
+}
+
+.friend-list li {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.friend-list li:hover {
+    background: #f5f7fa;
+}
+
+.friend-list img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.friend-list span {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Chat Area */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+}
+
+.chat-header {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #fff;
+}
+
+.messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #e5ddd5;
+}
+
+.message {
+    max-width: 60%;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    position: relative;
+    display: inline-block;
+    line-height: 1.4;
+}
+
+.message.user {
+    width: fit-content;
+    display: block;
+    background: #4a90e2;
+    color: #fff;
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+}
+
+.message.friend {
+    width: fit-content;
+    display: block;
+    background: #fff;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+}
+
+.chat-input {
+    padding: 15px 20px;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+.chat-input button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.chat-input button:hover {
+    background: #357ab8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
